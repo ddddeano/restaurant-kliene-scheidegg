@@ -1,7 +1,6 @@
 <template>
     <div @click="change" class="button" :class="food.command ? 'pressed' : 'passive'">
         {{ food.id }}
-        {{ food.name }}
     </div>
 </template>
 
