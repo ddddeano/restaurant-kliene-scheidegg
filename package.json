@@ -9,5 +9,9 @@
   },
   "devDependencies": {
     "nuxt": "^3.0.0"
+  },
+  "dependencies": {
+    "firebase": "^9.16.0",
+    "sass": "^1.57.1"
   }
 }
