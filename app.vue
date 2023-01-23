@@ -1,42 +1,46 @@
 <template>
   <div class="app">
-    <div v-for="food in foods">
-      <Button :food="food" />
+    <div v-for="product in products">
+      <Button :product="product" />
     </div>
   </div>
 </template>
 
+
 <script setup>
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+const products = ref([])
 
-import { collection, onSnapshot } from "firebase/firestore";
-
-const foods = ref([])
-
-onMounted(async () => {
-  const { firestore } = useFirebase();
-  const fireRef = collection(firestore, "foods")
-
-  const listen = onSnapshot(fireRef, (foodSnapshot) => {
-    const foodSnap = [];
-    foodSnapshot.forEach((food) => {
-      const foodData = {
-        id: food.id,
-        command: food.data().command,
-      };
-      foodSnap.push(foodData);
-    });
-    foods.value = foodSnap;
-  });
-  console.log("product listener attached")
+onMounted(() => {
+  getProducts()
 })
 
+const getProducts = () => {
+  const { firestore } = useFirebase();
+  const fireQuery = query(collection(firestore, "products"), where("active", "==", true));
 
-
-
-
+  const listen = onSnapshot(fireQuery, (productSnapshot) => {
+    const productSnap = [];
+    productSnapshot.forEach((product) => {
+      const productData = {
+        id: product.id,
+        command: product.data().command
+      };
+      productSnap.push(productData);
+    });
+    products.value = productSnap;
+  });
+  console.log("product listener attached")
+}
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 200px;
 
+}
 </style>

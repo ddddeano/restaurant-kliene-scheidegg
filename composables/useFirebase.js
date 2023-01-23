@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 export const useFirebase = () => {
     const firebaseConfig = {
@@ -8,7 +8,7 @@ export const useFirebase = () => {
         projectId: "restaurant-scheidegg",
         storageBucket: "restaurant-scheidegg.appspot.com",
         messagingSenderId: "449818851344",
-        appId: "1:449818851344:web:01a36c8c1665e01c1df295"
+        appId: "1:449818851344:web:611f1dc6dfa4f1bf1df295"
     };
 
     const firebaseApp = initializeApp(firebaseConfig);

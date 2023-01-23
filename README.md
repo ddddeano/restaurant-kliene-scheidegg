@@ -17,6 +17,13 @@ npm install
 pnpm install
 ```
 
+# Pinia
+
+keith mifsud nuxt3 pinia
+
+npm install @pinia/nuxt
+npm i --force pinia
+
 ## Development Server
 
 Start the development server on http://localhost:3000

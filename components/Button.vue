@@ -1,21 +1,40 @@
 <template>
-    <div @click="change" class="button" :class="food.command ? 'pressed' : 'passive'">
-        {{ food.id }}
+    <div @click="updateProduct" class="button" :class="onCommand.value ? 'passive' : 'pressed'">
+        {{ fetchedProduct.name }}
     </div>
 </template>
 
 <script setup>
-import { doc, updateDoc } from "firebase/firestore";
-const { firestore } = useFirebase();
-const { food } = defineProps(['food'])
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+const { product } = defineProps(['product'])
 
-const change = async () => {
-    console.log(food.command)
+const onCommand = reactive({
+    value: false
+})
 
-    await updateDoc(doc(firestore, "foods", food.id), {
-        command: !food.command,
-    })
-    console.log(food.command)
+// Server Side
+const { data: fetchedProduct } = await useFetch(`/api/product?name=${product.id}`);
+
+// Client Side
+onMounted(async () => {
+    const { firestore } = useFirebase();
+    const docRef = doc(firestore, `products`, product.id);
+    onSnapshot(docRef, (snap) => {
+        fetchedProduct.value = snap.data();
+        onCommand.value = snap.data().command;
+    });
+    console.log(fetchedProduct)
+});
+
+const updateProduct = async () => {
+
+    console.log("Updating product")
+    const { firestore } = useFirebase();
+    const docRef = doc(firestore, `products`, product.id);
+
+    await updateDoc(docRef, {
+        command: !onCommand.value,
+    });
 }
 
 

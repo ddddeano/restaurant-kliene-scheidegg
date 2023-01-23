@@ -2,8 +2,9 @@
 export default defineNuxtConfig({
   css: ["@/assets/styles/default.scss", "@/assets/styles/style.scss"],
   imports: {
-    dirs: ["stores", "composables", "firebase"],
+    dirs: ["stores", "composables"],
   },
+  modules: [["nuxt-icon"], ["@pinia/nuxt", { autoImports: [["defineStore", "definePiniaStore"]] }]],
   app: {
     head: {
       title: "Scheidegg",
